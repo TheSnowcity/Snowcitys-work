@@ -2,11 +2,7 @@
   "required": true,
   "package": "com.snowcity.snowcityswork.mixin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "mixins.snowcityswork.refmap.json",
   "mixins": [
-    "gtceu.GTCreateMachinesMixin",
-    "gtceu.GTUtilMixin",
-    "gtceu.WorkableElectricMultiblockMachineMixin"
   ],
   "client": [],
   "minVersion": "0.8"

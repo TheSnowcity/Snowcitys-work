@@ -129,7 +129,24 @@ repositories {
         url = "https://cursemaven.com"
     }
     maven {
-        url = "https://maven.gtceu.com"
+        name = 'FirstDarkDev'
+        url = "https://maven.firstdarkdev.xyz/snapshots/"
+    }
+    maven {
+        name = 'GTCEu Maven'
+        url = 'https://maven.gtceu.com'
+        content {
+            includeGroup 'com.gregtechceu.gtceu'
+        }
+    }
+    maven { // Registrate
+        url = "https://maven.tterrag.com/"
+        content {
+            // need to be specific here due to version overlaps
+            includeGroup("com.jozufozu.flywheel")
+            includeGroup("com.tterrag.registrate")
+            includeGroup("com.simibubi.create")
+        }
     }
 }
 
@@ -141,9 +158,13 @@ dependencies {
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
-    implementation fg.deobf("curse.maven:gregtechceu-modern-890405:5812598")
+    implementation fg.deobf("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}") { transitive = false }
+    implementation fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gregtech_version}:slim") { transitive = false }
+    runtimeOnly fg.deobf("dev.toma.configuration:configuration-forge-${minecraft_version}:${configuration_version}")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("curse.maven:jade-324717:5640610")
 
@@ -167,14 +188,14 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
 
-mixin {
-    // MixinGradle Settings'
-    add sourceSets.main, 'mixins.snowcityswork.refmap.json'
-    config 'mixins.snowcityswork.json'
-
-    debug.verbose = true
-    debug.export = true
-}
+//mixin {
+//    // MixinGradle Settings'
+//    add sourceSets.main, 'mixins.snowcityswork.refmap.json'
+//    config 'mixins.snowcityswork.json'
+//
+//    debug.verbose = true
+//    debug.export = true
+//}
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 // When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
