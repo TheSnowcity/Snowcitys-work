@@ -10,11 +10,15 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class CommonProxy {
 
-    public static void init(){
+    public CommonProxy() {
+        init();
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    }
 
-        SWMachines.init();
-        SWRegistration.SNOWCITYSWORK_REGISTRATE.registerRegistrate();
-        SWMaterials.init();
+    public static void init(){
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
         SWCreativeModeTabs.init();
+        SWRegistration.SNOWCITYSWORK_REGISTRATE.registerRegistrate();
     }
 }
