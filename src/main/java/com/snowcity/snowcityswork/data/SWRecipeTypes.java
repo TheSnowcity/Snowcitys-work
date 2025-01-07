@@ -17,6 +17,7 @@ import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
 
+import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeType;
 
@@ -29,7 +30,8 @@ public class SWRecipeTypes {
     public static final GTRecipeType VOLTAIC_PILE_RECIPE = GTRecipeTypes.register("voltaic_pile", GTRecipeTypes.ELECTRIC)
             .setMaxIOSize(2, 2, 1, 1)
             .setEUIO(IO.OUT)
-            .setSlotOverlay(true, true, true, GuiTextures.FURNACE_OVERLAY_2)
+            .setSlotOverlay(false, false, GuiTextures.SOLIDIFIER_OVERLAY)
+            .setSound(GTSoundEntries.CHEMICAL)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, LEFT_TO_RIGHT);
 
     public static void init() {
