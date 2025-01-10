@@ -4,11 +4,9 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.RotationState;
-import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
-import com.gregtechceu.gtceu.api.machine.MachineDefinition;
-import com.gregtechceu.gtceu.api.machine.MetaMachine;
+import com.gregtechceu.gtceu.api.machine.*;
 import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
-import com.gregtechceu.gtceu.client.renderer.machine.MinerRenderer;
+import com.gregtechceu.gtceu.client.renderer.machine.SimpleGeneratorMachineRenderer;
 import com.snowcity.snowcityswork.common.block.machine.electric.VoltaicPile;
 import com.snowcity.snowcityswork.Snowcityswork;
 
@@ -30,9 +28,12 @@ public class SWMachines {
             VoltaicPile::new,
             (tier, builder) -> builder
                     .langValue("%s Voltaic Pile %s".formatted(VLVH[tier], VLVT[tier]))
-                    .rotationState(RotationState.NON_Y_AXIS)
-                    .renderer(() -> new MinerRenderer(tier, GTCEu.id("block/machine/air_scrubber")))
+                    .editableUI(SimpleTieredMachine.EDITABLE_UI_CREATOR.apply(Snowcityswork.id("voltaic_pile"),
+                            SWRecipeTypes.VOLTAIC_PILE_RECIPE))
+                    .rotationState(RotationState.ALL)
+                    .renderer(() -> new SimpleGeneratorMachineRenderer(tier, GTCEu.id("block/machines/combustion")))
                     .recipeType(VOLTAIC_PILE_RECIPE)
+                    .recipeModifier(SimpleGeneratorMachine::recipeModifier, true)
                     .register(),
             LV, MV, HV);
 

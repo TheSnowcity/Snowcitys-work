@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 
 import com.snowcity.snowcityswork.common.registry.*;
 
+import com.snowcity.snowcityswork.data.SWRecipe;
 import net.minecraft.data.recipes.FinishedRecipe;
 
 import java.util.function.Consumer;
@@ -25,5 +26,10 @@ public class SWGTAddon implements IGTAddon{
     @Override
     public String addonModId() {
         return Snowcityswork.MODID;
+    }
+
+    @Override
+    public void addRecipes(Consumer<FinishedRecipe> provider) {
+        SWRecipe.init(provider);
     }
 }

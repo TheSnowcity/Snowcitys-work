@@ -3,6 +3,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 
 import com.snowcity.snowcityswork.common.registry.SWRegistration;
 import com.snowcity.snowcityswork.data.*;
+import com.snowcity.snowcityswork.data.SWRecipe;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
