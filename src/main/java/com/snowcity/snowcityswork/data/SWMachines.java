@@ -28,7 +28,7 @@ public class SWMachines {
             VoltaicPile::new,
             (tier, builder) -> builder
                     .langValue("%s Voltaic Pile %s".formatted(VLVH[tier], VLVT[tier]))
-                    .editableUI(SimpleTieredMachine.EDITABLE_UI_CREATOR.apply(Snowcityswork.id("voltaic_pile"),
+                    .editableUI(SimpleGeneratorMachine.EDITABLE_UI_CREATOR.apply(Snowcityswork.id("voltaic_pile"),
                             SWRecipeTypes.VOLTAIC_PILE_RECIPE))
                     .rotationState(RotationState.ALL)
                     .renderer(() -> new SimpleGeneratorMachineRenderer(tier, GTCEu.id("block/machines/combustion")))

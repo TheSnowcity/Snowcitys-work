@@ -34,13 +34,6 @@ import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ASSEMBLER_RECIPES;
 
 public class SWRecipe {
     public static void init(Consumer<FinishedRecipe> provider){
-        SWRecipeTypes.VOLTAIC_PILE_RECIPE.recipeBuilder("useless_fluid")
-                .inputItems(plate,Copper)
-                .inputItems(plate,Zinc)
-                .inputFluids(SulfuricAcid.getFluid(16000))
-                .outputFluids(SWMaterials.UselessFluid.getFluid(16000))
-                .duration(1000)
-                .EUt(-GTValues.VA[GTValues.HV])
-                .save(provider);
+
     }
 }
