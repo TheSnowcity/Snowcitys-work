@@ -34,6 +34,13 @@ public class SWRecipeTypes {
             .setSound(GTSoundEntries.CHEMICAL)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, LEFT_TO_RIGHT);
 
+    public static final GTRecipeType ISAMILL_RECIPE = GTRecipeTypes.register("isamill", GTRecipeTypes.ELECTRIC)
+            .setMaxIOSize(2,1,0,0)
+            .setEUIO(IO.IN)
+            .setSlotOverlay(false, false, GuiTextures.IN_SLOT_OVERLAY)
+            .setSound(GTSoundEntries.COOLING)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, LEFT_TO_RIGHT);
+
     public static void init() {
 
     }
