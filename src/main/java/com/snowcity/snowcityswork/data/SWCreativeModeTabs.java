@@ -18,6 +18,12 @@ public class SWCreativeModeTabs {
                             .title(SNOWCITYSWORK_REGISTRATE.addLang("machinesGroup", Snowcityswork.id("machines"), "MACHINES"))
                             .build())
             .register();
+    public static RegistryEntry<CreativeModeTab> ITEMS = SNOWCITYSWORK_REGISTRATE.defaultCreativeTab("items",
+                    builder -> builder.displayItems(new GTCreativeModeTabs.RegistrateDisplayItemsGenerator("items", SNOWCITYSWORK_REGISTRATE))
+                            .icon(() -> GTBlocks.COIL_CUPRONICKEL.asStack())
+                            .title(SNOWCITYSWORK_REGISTRATE.addLang("itemsGroup", Snowcityswork.id("items"), "ITEMS"))
+                            .build())
+            .register();
 
     public static void init() {}
 }

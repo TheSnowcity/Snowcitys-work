@@ -24,6 +24,7 @@ public class SWMachines {
     static {
         SNOWCITYSWORK_REGISTRATE.creativeModeTab(() -> SWCreativeModeTabs.MACHINES);
     }
+
     public static final MachineDefinition[] VOLTAICPILE = registerTieredMachines("voltaic_pile",
             VoltaicPile::new,
             (tier, builder) -> builder

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "gtceu:aluminium_ingot"
+    },
+    "B": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "sw:aluminium_grindball",
+    "count": 1
+  }
+}
