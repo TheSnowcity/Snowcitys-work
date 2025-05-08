@@ -34,5 +34,6 @@ public class SWGTAddon implements IGTAddon{
     public void addRecipes(Consumer<FinishedRecipe> provider) {
         SWRecipe.init(provider);
         VoltaicPileRecipe.init(provider);
+        IsaMillRecipe.init(provider);
     }
 }

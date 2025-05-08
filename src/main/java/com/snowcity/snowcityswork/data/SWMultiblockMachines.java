@@ -24,7 +24,7 @@ public class SWMultiblockMachines {
     public static final MultiblockMachineDefinition IsaMill = SNOWCITYSWORK_REGISTRATE.multiblock("isamill", IsaMill::new)
             .rotationState(RotationState.NON_Y_AXIS)
             .recipeType(ISAMILL_RECIPE)
-            .recipeModifier(GTRecipeModifiers.OC_NON_PERFECT)
+            .recipeModifier(GTRecipeModifiers.OC_PERFECT)
             .appearanceBlock(CASING_STAINLESS_CLEAN)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("EEE", "EEE", "EEE")

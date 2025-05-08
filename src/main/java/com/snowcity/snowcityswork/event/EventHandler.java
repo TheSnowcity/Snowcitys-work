@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 public class EventHandler {
     public static void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
         SWMachines.init();
+        SWMultiblockMachines.init();
     }
 
     public static void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {
