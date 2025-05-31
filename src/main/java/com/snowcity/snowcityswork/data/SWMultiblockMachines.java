@@ -2,6 +2,7 @@ package com.snowcity.snowcityswork.data;
 
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.RotationState;
+import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
@@ -9,8 +10,10 @@ import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 
+import com.snowcity.snowcityswork.api.machine.multiblock.part.GrindBallHatchPartMachine;
 import com.snowcity.snowcityswork.common.block.machine.multiblock.electric.IsaMill;
 
+import static com.gregtechceu.gtceu.api.GTValues.LuV;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.*;
 import static com.snowcity.snowcityswork.data.SWRecipeTypes.ISAMILL_RECIPE;
 
@@ -20,6 +23,12 @@ public class SWMultiblockMachines {
     static {
         SNOWCITYSWORK_REGISTRATE.creativeModeTab(() -> SWCreativeModeTabs.MACHINES);
     }
+
+    public static final MachineDefinition GRINDBALL_HATCH = SNOWCITYSWORK_REGISTRATE.machine("grindball_hatch", GrindBallHatchPartMachine::new)
+            .rotationState(RotationState.ALL)
+            .langValue("GrindBall Hatch")
+            .tier(LuV)
+            .register();
 
     public static final MultiblockMachineDefinition IsaMill = SNOWCITYSWORK_REGISTRATE.multiblock("isamill", IsaMill::new)
             .rotationState(RotationState.NON_Y_AXIS)

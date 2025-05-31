@@ -1,20 +1,24 @@
 package com.snowcity.snowcityswork.common.item.behaviors;
 
 
+import com.gregtechceu.gtceu.api.item.ComponentItem;
 import com.gregtechceu.gtceu.api.item.component.IInteractionItem;
 
+import com.gregtechceu.gtceu.api.item.component.IItemComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GrindBallBehavior implements IInteractionItem {
+public class GrindBallBehavior implements IItemComponent {
 
     private final int maxDurability;
 
@@ -49,7 +53,20 @@ public class GrindBallBehavior implements IInteractionItem {
     }
 
     public void appendHoverText(ItemStack itemstack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.tooltip.durability", maxDurability - itemstack.getDamageValue(), maxDurability));
+        tooltip.add(Component.translatable("item.tooltip.durability", maxDurability - getDamage(itemstack), maxDurability));
+    }
+
+    @Nullable
+    public static GrindBallBehavior getBehavior(@NotNull ItemStack itemStack) {
+        Item item = itemStack.getItem();
+        if (item instanceof ComponentItem componentItem) {
+            for (IItemComponent component : componentItem.getComponents()) {
+                if (component instanceof GrindBallBehavior behavior) {
+                    return behavior;
+                }
+            }
+        }
+        return null;
     }
 
 }
