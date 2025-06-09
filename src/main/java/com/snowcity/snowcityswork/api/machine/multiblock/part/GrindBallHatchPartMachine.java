@@ -29,6 +29,8 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
 
     @Persisted
     private final NotifiableItemStackHandler grindBallInventory = createGrindBallInventory();
+    @Persisted
+    private final NotifiableItemStackHandler buffer = new NotifiableItemStackHandler(this, 4, IO.NONE, IO.BOTH);
 
     private ISubscription inventorySubs;
     private TickableSubscription transferSubs;
@@ -42,6 +44,7 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
         super.onLoad();
         if (!isRemote()) {
             inventorySubs = grindBallInventory.addChangedListener(this::onInventoryChanged);
+            buffer.addChangedListener(this::onInventoryChanged);
         }
     }
 
@@ -121,7 +124,7 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
     }
 
     private void onInventoryChanged() {
-        if (isWorkingEnabled() && !grindBallInventory.isEmpty()) {
+        if (isWorkingEnabled() && !buffer.isEmpty()) {
             transferSubs = subscribeServerTick(transferSubs, this::transferItems);
         } else {
             unsubscribe();
@@ -129,15 +132,19 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
     }
 
     private void transferItems() {
-        for (int i = 0; i < grindBallInventory.getSlots(); i++) {
-            ItemStack stack = grindBallInventory.getStackInSlot(i);
-            if (!stack.isEmpty()) {
-                // Custom logic to use the grind ball
+        for (int i = 0; i < buffer.getSlots(); i++) {
+            ItemStack stack = buffer.getStackInSlot(i);
+            if (stack.isEmpty() || !grindBallInventory.getStackInSlot(i).isEmpty()) continue;
+            if (!buffer.extractItem(i, 1, true).isEmpty()) {
+                ItemStack copy = stack.copyWithCount(1);
+                if (grindBallInventory.insertItemInternal(i, copy, true).isEmpty()) {
+                    buffer.extractItem(i, 1, false);
+                    grindBallInventory.insertItemInternal(i, copy, false);
+                }
             }
         }
         unsubscribe();
     }
-
     private void unsubscribe() {
         if (transferSubs != null) {
             transferSubs.unsubscribe();
@@ -147,9 +154,18 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
 
     @Override
     public Widget createUIWidget() {
-        WidgetGroup group = new WidgetGroup(0, 0, 18 * 4 + 16, 18 * 2 + 16);
-        WidgetGroup container = new WidgetGroup(4, 4, 18 * 4 + 8, 18 * 2 + 8);
-        addSlots(container, grindBallInventory, 4, 4, true);
+        WidgetGroup group = new WidgetGroup(0, 0, 18 * 4 + 31, 18 * 2 + 16);
+        WidgetGroup container = new WidgetGroup(4, 4, 18 * 4 + 23, 18 * 2 + 8);
+
+//        // 箭头指示器
+//        container.addWidget(new ImageWidget(75, 13, 18, 18, CatalystHatchPartMachine.SMALL_ARROW_OVERLAY));
+
+        // 添加左侧 buffer 槽
+        addSlots(container, buffer, 4, 4, true);
+
+        // 添加右侧 grindBallInventory 槽
+        addSlots(container, grindBallInventory, 54, 4, false);
+
         container.setBackground(GuiTextures.BACKGROUND_INVERSE);
         group.addWidget(container);
         return group;
@@ -168,6 +184,12 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
     @Override
     public ManagedFieldHolder getFieldHolder() {
         return MANAGED_FIELD_HOLDER;
+    }
+
+    @Override
+    public void setWorkingEnabled(boolean workingEnable){
+        super.setWorkingEnabled(workingEnable);
+        onInventoryChanged();
     }
 
     public static final ManagedFieldHolder MANAGED_FIELD_HOLDER =

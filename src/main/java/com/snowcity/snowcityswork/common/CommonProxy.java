@@ -20,6 +20,7 @@ public class CommonProxy {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         SWCreativeModeTabs.init();
+        SWDataGen.init();
         SWRegistration.SNOWCITYSWORK_REGISTRATE.registerRegistrate();
     }
 }

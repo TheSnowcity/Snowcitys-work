@@ -17,6 +17,7 @@ public class SWItems {
             .item("aluminium_grindball", ComponentItem::create)
             .lang("Aluminium GrindBall")
             .onRegister(attach(new GrindBallBehavior(100)))
+            .tag(SWTags.GRINDBALL)
             .register();
     public static ItemEntry<ComponentItem> SoapStoneGrindBall = SNOWCITYSWORK_REGISTRATE
             .item("soapstone_grindball", ComponentItem::create)
