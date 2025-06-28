@@ -2,6 +2,7 @@ package com.snowcity.snowcityswork.common.item.behaviors;
 
 
 import com.gregtechceu.gtceu.api.item.ComponentItem;
+import com.gregtechceu.gtceu.api.item.component.IAddInformation;
 import com.gregtechceu.gtceu.api.item.component.IInteractionItem;
 
 import com.gregtechceu.gtceu.api.item.component.IItemComponent;
@@ -18,12 +19,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GrindBallBehavior implements IItemComponent {
+public class GrindBallBehavior implements IItemComponent, IAddInformation {
 
     private final int maxDurability;
 
-    public GrindBallBehavior(int maxDurability) {
-        this.maxDurability = maxDurability;
+    public GrindBallBehavior() {
+        this.maxDurability = 100;
     }
 
     public int getBallDurabilityPercent(ItemStack itemStack) {
@@ -41,6 +42,7 @@ public class GrindBallBehavior implements IItemComponent {
     public void setDamage(ItemStack itemstack, int damage) {
         CompoundTag tag = itemstack.getOrCreateTag();
         tag.putInt("Damage", Math.min(maxDurability, Math.max(0, damage)));
+        System.out.println(damage);
     }
 
     public void applyGrindBallDamage(ItemStack itemStack, int damageApplied) {
@@ -52,8 +54,9 @@ public class GrindBallBehavior implements IItemComponent {
         }
     }
 
+    @Override
     public void appendHoverText(ItemStack itemstack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.tooltip.durability", maxDurability - getDamage(itemstack), maxDurability));
+        tooltip.add(Component.translatable("metaitem.tool.tooltip.durability", maxDurability - getDamage(itemstack), maxDurability));
     }
 
     @Nullable

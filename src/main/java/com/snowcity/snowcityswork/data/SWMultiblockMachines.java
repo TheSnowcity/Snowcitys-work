@@ -11,6 +11,7 @@ import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 
 import com.snowcity.snowcityswork.api.machine.multiblock.part.GrindBallHatchPartMachine;
+import com.snowcity.snowcityswork.api.machine.multiblock.SWPartAbility;
 import com.snowcity.snowcityswork.common.block.machine.multiblock.electric.IsaMill;
 
 import static com.gregtechceu.gtceu.api.GTValues.LuV;
@@ -25,6 +26,7 @@ public class SWMultiblockMachines {
     }
 
     public static final MachineDefinition GRINDBALL_HATCH = SNOWCITYSWORK_REGISTRATE.machine("grindball_hatch", GrindBallHatchPartMachine::new)
+            .abilities(SWPartAbility.GRINDBALL)
             .rotationState(RotationState.ALL)
             .langValue("GrindBall Hatch")
             .tier(LuV)
@@ -48,6 +50,7 @@ public class SWMultiblockMachines {
                     .where("C", Predicates.blocks(CASING_STAINLESS_TURBINE.get()))
                     .where("E", Predicates.blocks(CASING_STAINLESS_CLEAN.get()).setMinGlobalLimited(4)
                             .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                            .or(Predicates.abilities(SWPartAbility.GRINDBALL))
                             .or(Predicates.abilities(PartAbility.MAINTENANCE).setExactLimit(1))
                     )
                     .where(" ", Predicates.air())

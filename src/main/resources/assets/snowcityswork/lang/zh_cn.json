@@ -2,5 +2,6 @@
     "item.snowcityswork.aluminium_grindball": "铝研磨球",
     "block.snowcityswork.lv_voltaic_pile": "基础伏打电堆§r",
     "block.snowcityswork.mv_voltaic_pile": "§b进阶伏打电堆§r",
-    "block.snowcityswork.hv_voltaic_pile": "§6进阶伏打电堆§r"
+    "block.snowcityswork.hv_voltaic_pile": "§6进阶伏打电堆§r",
+    "metaitem.tool.tooltip.durability": "耐久：%s / %s"
 }

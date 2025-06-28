@@ -1,6 +1,7 @@
 package com.snowcity.snowcityswork.data;
 
 import com.gregtechceu.gtceu.api.item.ComponentItem;
+import com.snowcity.snowcityswork.api.item.GrindBallItem;
 import com.snowcity.snowcityswork.common.item.behaviors.GrindBallBehavior;
 import com.tterrag.registrate.util.entry.ItemEntry;
 
@@ -14,9 +15,9 @@ public class SWItems {
     }
 
     public static ItemEntry<ComponentItem> AluminiumGrindBall = SNOWCITYSWORK_REGISTRATE
-            .item("aluminium_grindball", ComponentItem::create)
+            .item("aluminium_grindball", GrindBallItem::create)
             .lang("Aluminium GrindBall")
-            .onRegister(attach(new GrindBallBehavior(100)))
+            .onRegister(attach(new GrindBallBehavior()))
             .tag(SWTags.GRINDBALL)
             .register();
     public static ItemEntry<ComponentItem> SoapStoneGrindBall = SNOWCITYSWORK_REGISTRATE

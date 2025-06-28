@@ -2,10 +2,12 @@ package com.snowcity.snowcityswork.api.machine.multiblock.part;
 
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
+import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
+import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.TieredIOPartMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
@@ -59,7 +61,7 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
         return new NotifiableItemStackHandler(this, 4, IO.IN, IO.OUT, slots -> new CustomItemStackHandler(slots) {
             @Override
             public int getSlotLimit(int slot) {
-                return 1;
+                return 1; // 每槽最多一个物品
             }
         }) {
             @Override
@@ -69,43 +71,66 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
 
             @Override
             public List<Ingredient> handleRecipeInner(IO io, GTRecipe recipe, List<Ingredient> left, String slotName, boolean simulate) {
-                if (io != handlerIO || (slotName != null && !GRINDBALL.equals(slotName))) return left;
+                System.out.println("amns");
+                if (io != handlerIO) return left;
+                System.out.println("3");
+                if (slotName != null && !GRINDBALL.equals(slotName)) return left;
 
-                CustomItemStackHandler handler;
+                IItemHandlerModifiable capability;
+                System.out.println("1");
+
                 if (simulate) {
                     NonNullList<ItemStack> items = NonNullList.create();
                     for (int i = 0; i < storage.getSlots(); i++) {
-                        items.add(storage.getStackInSlot(i));
+                        items.add(storage.getStackInSlot(i).copy());
                     }
-                    handler = new CustomItemStackHandler(items);
+                    capability = new CustomItemStackHandler(items);
                 } else {
-                    handler = storage;
+                    capability = storage;
                 }
-                Iterator<Ingredient> it = left.iterator();
 
-                while (it.hasNext()) {
-                    Ingredient ingredient = it.next();
+                Iterator<Ingredient> iterator = left.iterator();
+                System.out.println("2");
 
-                    for (int i = 0; i < handler.getSlots(); i++) {
-                        ItemStack stack = handler.getStackInSlot(i);
-                        if (ingredient.test(stack)) {
-                            GrindBallBehavior behavior = GrindBallBehavior.getBehavior(stack);
-                            int damage = simulate ? 1 : calculateDamageAmount(stack);
+                if (io == IO.IN) {
+                    while (iterator.hasNext()) {
+                        Ingredient ingredient = iterator.next();
 
-                            if (behavior != null) {
-                                behavior.applyGrindBallDamage(stack, damage);
-                            } else {
-                                handler.extractItem(i, damage, false);
-                            }
+                        // 遍历槽中的物品
+                        for (int i = 0; i < capability.getSlots(); i++) {
+                            ItemStack item = capability.getStackInSlot(i);
+                            ItemStack itemStack = simulate ? item.copy() : item;
 
-                            if (!simulate) {
-                                break;
-                                //ingredient.shrink(damage);
-                            }
+                            if (ingredient.test(itemStack)) {
+                                for (ItemStack ingredientStack : ingredient.getItems()) {
+                                    if (ingredientStack.is(itemStack.getItem())) {
+                                        GrindBallBehavior behavior = GrindBallBehavior.getBehavior(itemStack);
+                                        int count = ingredientStack.getCount();
 
-                            if (ingredient.isEmpty()) {
-                                it.remove();
-                                break;
+                                        if (!simulate) {
+                                            int damage = calculateDamageAmount(itemStack);
+                                            if (behavior != null) {
+                                                int applyDamage = Math.min(damage, behavior.getDamage(itemStack));
+                                                behavior.applyGrindBallDamage(itemStack, applyDamage);
+                                                ingredientStack.shrink(applyDamage);
+
+                                                // 如果研磨球物品耗尽，转移物品
+                                                if (itemStack.isEmpty() || ingredientStack.isEmpty()) {
+                                                    transferItems();
+                                                }
+                                            } else {
+                                                ItemStack extracted = capability.extractItem(i, count, false);
+                                                ingredientStack.shrink(extracted.getCount());
+                                            }
+                                        }
+
+                                        // 如果 ingredientStack 为空，移除当前配方项
+                                        if (ingredientStack.isEmpty()) {
+                                            iterator.remove();
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -164,7 +189,7 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
         addSlots(container, buffer, 4, 4, true);
 
         // 添加右侧 grindBallInventory 槽
-        addSlots(container, grindBallInventory, 54, 4, false);
+        addSlots(container, grindBallInventory, 55, 4, false);
 
         container.setBackground(GuiTextures.BACKGROUND_INVERSE);
         group.addWidget(container);
