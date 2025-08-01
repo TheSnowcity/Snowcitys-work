@@ -50,6 +50,7 @@ public class SWMultiblockMachines {
                     .where("C", Predicates.blocks(CASING_STAINLESS_TURBINE.get()))
                     .where("E", Predicates.blocks(CASING_STAINLESS_CLEAN.get()).setMinGlobalLimited(4)
                             .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                            .or(Predicates.autoAbilities(true,false,false))
                             .or(Predicates.abilities(SWPartAbility.GRINDBALL))
                             .or(Predicates.abilities(PartAbility.MAINTENANCE).setExactLimit(1))
                     )

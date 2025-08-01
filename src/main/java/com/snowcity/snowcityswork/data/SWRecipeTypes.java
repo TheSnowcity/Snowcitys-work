@@ -35,7 +35,7 @@ public class SWRecipeTypes {
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, LEFT_TO_RIGHT);
 
     public static final GTRecipeType ISAMILL_RECIPE = GTRecipeTypes.register("isamill", GTRecipeTypes.ELECTRIC)
-            .setMaxIOSize(2,4,0,0)
+            .setMaxIOSize(4,4,0,0)
             .setEUIO(IO.IN)
             .setSlotOverlay(false, false, GuiTextures.IN_SLOT_OVERLAY)
             .setSound(GTSoundEntries.COOLING)

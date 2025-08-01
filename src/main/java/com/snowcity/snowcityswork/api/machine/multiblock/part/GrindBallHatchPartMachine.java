@@ -35,6 +35,7 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
     private final NotifiableItemStackHandler buffer = new NotifiableItemStackHandler(this, 4, IO.NONE, IO.BOTH);
 
     private ISubscription inventorySubs;
+    private ISubscription bufferSubs;
     private TickableSubscription transferSubs;
 
     public GrindBallHatchPartMachine(IMachineBlockEntity holder) {
@@ -46,7 +47,7 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
         super.onLoad();
         if (!isRemote()) {
             inventorySubs = grindBallInventory.addChangedListener(this::onInventoryChanged);
-            buffer.addChangedListener(this::onInventoryChanged);
+            bufferSubs = buffer.addChangedListener(this::onInventoryChanged);
         }
     }
 
@@ -54,7 +55,7 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
     public void onUnload() {
         super.onUnload();
         if (inventorySubs != null) inventorySubs.unsubscribe();
-        if (transferSubs != null) transferSubs.unsubscribe();
+        if (bufferSubs != null) bufferSubs.unsubscribe();
     }
 
     private NotifiableItemStackHandler createGrindBallInventory() {
@@ -96,10 +97,14 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
                     while (iterator.hasNext()) {
                         Ingredient ingredient = iterator.next();
 
+                        System.out.println("If correct");
+
                         // 遍历槽中的物品
                         for (int i = 0; i < capability.getSlots(); i++) {
                             ItemStack item = capability.getStackInSlot(i);
                             ItemStack itemStack = simulate ? item.copy() : item;
+
+                            System.out.println("Start Read");
 
                             if (ingredient.test(itemStack)) {
                                 for (ItemStack ingredientStack : ingredient.getItems()) {
@@ -107,22 +112,34 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
                                         GrindBallBehavior behavior = GrindBallBehavior.getBehavior(itemStack);
                                         int count = ingredientStack.getCount();
 
-                                        if (!simulate) {
-                                            int damage = calculateDamageAmount(itemStack);
-                                            if (behavior != null) {
-                                                int applyDamage = Math.min(damage, behavior.getDamage(itemStack));
-                                                behavior.applyGrindBallDamage(itemStack, applyDamage);
-                                                ingredientStack.shrink(applyDamage);
+                                        System.out.println("before work");
 
-                                                // 如果研磨球物品耗尽，转移物品
-                                                if (itemStack.isEmpty() || ingredientStack.isEmpty()) {
-                                                    transferItems();
-                                                }
-                                            } else {
-                                                ItemStack extracted = capability.extractItem(i, count, false);
-                                                ingredientStack.shrink(extracted.getCount());
-                                            }
+                                        System.out.println(behavior != null);
+
+                                        if (!simulate) {
+
+                                            System.out.println("Not simulate");
                                         }
+                                        int damage = 1;
+                                        if (behavior != null) {
+                                            int applyDamage = Math.min(damage, 100 - behavior.getDamage(itemStack));
+                                            behavior.applyGrindBallDamage(itemStack, applyDamage);
+                                            ingredientStack.shrink(applyDamage);
+
+                                            System.out.println(applyDamage);
+
+                                            System.out.println("Start shrink");
+
+                                            // 如果研磨球物品耗尽，转移物品
+                                            if (itemStack.isEmpty() || ingredientStack.isEmpty()) {
+                                                transferItems();
+                                            }
+                                        } else {
+                                            ItemStack extracted = capability.extractItem(i, count, false);
+                                            ingredientStack.shrink(extracted.getCount());
+                                        }
+
+                                        System.out.println("after work");
 
                                         // 如果 ingredientStack 为空，移除当前配方项
                                         if (ingredientStack.isEmpty()) {
@@ -142,10 +159,11 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
     }
 
     private int calculateDamageAmount(ItemStack stack) {
-        float chance = 1.0f; // Replace with logic if needed
-        double mean = chance;
-        double stdDev = chance * (1 - chance);
-        return (int) Math.ceil(Math.sqrt(stdDev) * GTValues.RNG.nextGaussian() + mean);
+//        float chance = 1.0f; // Replace with logic if needed
+//        double mean = chance;
+//        double stdDev = chance * (1 - chance);
+//        return (int) Math.ceil(Math.sqrt(stdDev) * GTValues.RNG.nextGaussian() + mean);
+        return 1;
     }
 
     private void onInventoryChanged() {
