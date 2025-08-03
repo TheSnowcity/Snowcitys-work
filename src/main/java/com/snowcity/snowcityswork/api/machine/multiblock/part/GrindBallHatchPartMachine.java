@@ -72,13 +72,10 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
 
             @Override
             public List<Ingredient> handleRecipeInner(IO io, GTRecipe recipe, List<Ingredient> left, String slotName, boolean simulate) {
-                System.out.println("amns");
                 if (io != handlerIO) return left;
-                System.out.println("3");
                 if (slotName != null && !GRINDBALL.equals(slotName)) return left;
 
                 IItemHandlerModifiable capability;
-                System.out.println("1");
 
                 if (simulate) {
                     NonNullList<ItemStack> items = NonNullList.create();
@@ -91,7 +88,6 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
                 }
 
                 Iterator<Ingredient> iterator = left.iterator();
-                System.out.println("2");
 
                 if (io == IO.IN) {
                     while (iterator.hasNext()) {
@@ -103,21 +99,12 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
                         for (int i = 0; i < capability.getSlots(); i++) {
                             ItemStack item = capability.getStackInSlot(i);
                             ItemStack itemStack = simulate ? item.copy() : item;
-
-                            System.out.println("Start Read");
-
                             if (ingredient.test(itemStack)) {
                                 for (ItemStack ingredientStack : ingredient.getItems()) {
                                     if (ingredientStack.is(itemStack.getItem())) {
                                         GrindBallBehavior behavior = GrindBallBehavior.getBehavior(itemStack);
                                         int count = ingredientStack.getCount();
-
-                                        System.out.println("before work");
-
-                                        System.out.println(behavior != null);
-
                                         if (!simulate) {
-
                                             System.out.println("Not simulate");
                                         }
                                         int damage = 1;
@@ -125,11 +112,6 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
                                             int applyDamage = Math.min(damage, 100 - behavior.getDamage(itemStack));
                                             behavior.applyGrindBallDamage(itemStack, applyDamage);
                                             ingredientStack.shrink(applyDamage);
-
-                                            System.out.println(applyDamage);
-
-                                            System.out.println("Start shrink");
-
                                             // 如果研磨球物品耗尽，转移物品
                                             if (itemStack.isEmpty() || ingredientStack.isEmpty()) {
                                                 transferItems();
@@ -138,9 +120,6 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
                                             ItemStack extracted = capability.extractItem(i, count, false);
                                             ingredientStack.shrink(extracted.getCount());
                                         }
-
-                                        System.out.println("after work");
-
                                         // 如果 ingredientStack 为空，移除当前配方项
                                         if (ingredientStack.isEmpty()) {
                                             iterator.remove();

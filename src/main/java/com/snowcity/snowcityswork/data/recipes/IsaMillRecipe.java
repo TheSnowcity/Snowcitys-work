@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 import static com.snowcity.snowcityswork.data.SWItems.*;
+import static com.snowcity.snowcityswork.data.SWTagPrefix.generate_milled;
 
 public class IsaMillRecipe {
     public static void init(Consumer<FinishedRecipe> provider){
@@ -20,8 +21,8 @@ public class IsaMillRecipe {
         SWRecipeTypes.ISAMILL_RECIPE.recipeBuilder("generated_milled_redstone")
                 .inputItems(rawOre, Redstone, 16)
                 .inputItems(AluminiumGrindBall, 1)
-                .outputItems(GenerateMilledRedstone, 256)
-                .duration(10000)
+                .outputItems(generate_milled, Redstone, 96)
+                .duration(100)
                 .EUt(GTValues.VA[GTValues.LV])
                 .save(provider);
 

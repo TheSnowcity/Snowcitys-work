@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.snowcity.snowcityswork.Snowcityswork;
+import com.snowcity.snowcityswork.data.materials.AdjustGTMaterials;
 import net.minecraft.world.level.redstone.Redstone;
 import org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter;
 
@@ -24,6 +25,6 @@ public class SWMaterials{
             .buildAndRegister();
 
     public static void init() {
-
+        AdjustGTMaterials.init();
     }
 }

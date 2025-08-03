@@ -8,6 +8,7 @@ import com.snowcity.snowcityswork.common.block.machine.electric.VoltaicPile;
 import com.snowcity.snowcityswork.common.registry.*;
 
 import com.snowcity.snowcityswork.data.SWRecipe;
+import com.snowcity.snowcityswork.data.SWTagPrefix;
 import com.snowcity.snowcityswork.data.recipes.*;
 import net.minecraft.data.recipes.FinishedRecipe;
 
@@ -23,6 +24,11 @@ public class SWGTAddon implements IGTAddon{
     @Override
     public void initializeAddon() {
 
+    }
+
+    @Override
+    public void registerTagPrefixes(){
+        SWTagPrefix.init();
     }
 
     @Override

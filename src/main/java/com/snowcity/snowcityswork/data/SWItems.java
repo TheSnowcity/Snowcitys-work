@@ -24,11 +24,6 @@ public class SWItems {
             .item("soapstone_grindball", ComponentItem::create)
             .lang("SoapStone GrindBall")
             .register();
-    public static ItemEntry<ComponentItem> GenerateMilledRedstone = SNOWCITYSWORK_REGISTRATE
-            .item("generate_milled_redstone", ComponentItem::create)
-            .lang("Generate Milled Redstone")
-            .register();
-
 
     public static void init() {
     }

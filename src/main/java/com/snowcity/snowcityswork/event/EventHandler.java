@@ -6,6 +6,8 @@ import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.snowcity.snowcityswork.data.*;
 import com.snowcity.snowcityswork.Snowcityswork;
+import com.snowcity.snowcityswork.data.materials.AdjustGTMaterials;
+import com.snowcity.snowcityswork.data.materials.SWGenerateMilledItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,6 +18,8 @@ public class EventHandler {
         SWMachines.init();
         SWItems.init();
         SWMultiblockMachines.init();
+
+        SWGenerateMilledItem.init();
     }
 
     public static void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {
