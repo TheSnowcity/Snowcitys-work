@@ -1,9 +1,8 @@
-package com.snowcity.snowcityswork.common.item.behaviors;
+package com.snowcity.snowcityswork.api.item.behaviors;
 
 
 import com.gregtechceu.gtceu.api.item.ComponentItem;
 import com.gregtechceu.gtceu.api.item.component.IAddInformation;
-import com.gregtechceu.gtceu.api.item.component.IInteractionItem;
 
 import com.gregtechceu.gtceu.api.item.component.IItemComponent;
 import net.minecraft.nbt.CompoundTag;

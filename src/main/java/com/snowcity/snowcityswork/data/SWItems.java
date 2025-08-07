@@ -2,7 +2,7 @@ package com.snowcity.snowcityswork.data;
 
 import com.gregtechceu.gtceu.api.item.ComponentItem;
 import com.snowcity.snowcityswork.api.item.GrindBallItem;
-import com.snowcity.snowcityswork.common.item.behaviors.GrindBallBehavior;
+import com.snowcity.snowcityswork.api.item.behaviors.GrindBallBehavior;
 import com.tterrag.registrate.util.entry.ItemEntry;
 
 import static com.gregtechceu.gtceu.common.data.GTItems.attach;

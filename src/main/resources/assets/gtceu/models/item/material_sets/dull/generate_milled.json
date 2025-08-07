@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "snowcityswork:item/generate_milled/overlay",
+    "layer1": "snowcityswork:item/generate_milled/base"
+  }
+}
