@@ -64,14 +64,8 @@ public class GrindBallHatchPartMachine extends TieredIOPartMachine {
             }
         }) {
             @Override
-            public Set<String> getSlotNames() {
-                return Set.of(GRINDBALL);
-            }
-
-            @Override
-            public List<Ingredient> handleRecipeInner(IO io, GTRecipe recipe, List<Ingredient> left, String slotName, boolean simulate) {
+            public List<Ingredient> handleRecipeInner(IO io, GTRecipe recipe, List<Ingredient> left, boolean simulate) {
                 if (io != handlerIO) return left;
-                if (slotName != null && !GRINDBALL.equals(slotName)) return left;
 
                 IItemHandlerModifiable capability;
 

@@ -51,16 +51,14 @@ public class SWGenerateMilledItem {
                                         .item(generate_milled.idPattern().formatted(material.getName()), ComponentItem::create)
 //                                        .color(() -> TagPrefixBehavior::tintColor)
                                         .setData(ProviderType.LANG, NonNullBiConsumer.noop())
-//                                        .onRegister(item -> {
-//                                            try {
-//                                                ResourceLocation tex = new ResourceLocation("snowcityswork", "textures/item/generate_milled/base.png");
-//                                                Minecraft.getInstance().getTextureManager().getTexture(tex);
-//                                                System.out.println("Texture loaded successfully");
-//                                            } catch (Exception e) {
-//                                                System.out.println("Texture loading failed: " + e.getMessage());
-//                                            }
-//                                        })
-                                        .model(NonNullBiConsumer.noop())
+                                        .model((ctx, prov) -> {
+                                            String materialName = ctx.getName().replace("generate_milled_", "");
+
+                                            prov.getBuilder(ctx.getName())
+                                                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                                                    .texture("layer0", new ResourceLocation("snowcityswork", "item/generate_milled/base"))
+                                                    .texture("layer1", new ResourceLocation("snowcityswork", "item/generate_milled/overlay"));
+                                        })
                                         .transform(GTItems.unificationItem(generate_milled, material)) // 统一化物品
                                         .register()
                         );

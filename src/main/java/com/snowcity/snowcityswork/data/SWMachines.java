@@ -6,7 +6,6 @@ import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.*;
 import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
-import com.gregtechceu.gtceu.client.renderer.machine.SimpleGeneratorMachineRenderer;
 import com.snowcity.snowcityswork.common.block.machine.electric.VoltaicPile;
 import com.snowcity.snowcityswork.Snowcityswork;
 
@@ -32,7 +31,7 @@ public class SWMachines {
                     .editableUI(SimpleGeneratorMachine.EDITABLE_UI_CREATOR.apply(Snowcityswork.id("voltaic_pile"),
                             SWRecipeTypes.VOLTAIC_PILE_RECIPE))
                     .rotationState(RotationState.ALL)
-                    .renderer(() -> new SimpleGeneratorMachineRenderer(tier, GTCEu.id("block/machines/combustion")))
+                    .simpleGeneratorModel(GTCEu.id("block/generators/combustion"))
                     .recipeType(VOLTAIC_PILE_RECIPE)
                     .recipeModifier(SimpleGeneratorMachine::recipeModifier, true)
                     .register(),

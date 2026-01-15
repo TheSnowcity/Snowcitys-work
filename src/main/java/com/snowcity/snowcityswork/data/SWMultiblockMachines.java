@@ -57,7 +57,8 @@ public class SWMultiblockMachines {
                     .where(" ", Predicates.air())
                     .build()
             )
-            .workableCasingRenderer(GTCEu.id("block/casings/solid/machine_casing_clean_stainless_steel"), GTCEu.id("block/multiblock/generator/large_steam_turbine"), false)
+            .workableCasingModel(GTCEu.id("block/casings/solid/machine_casing_clean_stainless_steel"),
+                    GTCEu.id("block/multiblock/generator/large_steam_turbine"))
             .register();
 
     public static void init() {
